@@ -27,3 +27,9 @@ The special case WhiteCodel is similar to other Codels, but has slightly differe
 ### Execution
 
 Once the Codel/ColorBlock graph is constructed in memory, execution should be as easy as comparing the "current" ColorBlock to the next.
+
+## Architecture
+
+![Class diagram](./docs/PietSharpUML.png)
+
+[Source PlantUML](./docs/ClassDiagram.txt)
