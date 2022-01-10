@@ -1,0 +1,89 @@
+@startuml
+
+class Hue
+{
+  +{Static} Red
+  +{Static} Yellow
+  +{Static} Green
+  +{Static} Cyan
+  +{Static} Blue
+  +{Static} Magenta
+  +Compare(Hue): int
+}
+class Lightness
+{
+  +{Static} Light
+  +{Static} Normal
+  +{Static} Dark
+  +Compare(Lightness): int
+}
+class Color
+{
+  +{Static} White
+  +{Static} Black
+  +Color(Hue, Lightness)
+  +Color(Red: int, Green: int, Blue: int)
+  +Shift(): Color
+  +Shift(amount: int): Color
+  +CompareHue(Color): int
+  +CompareLightness(Color): int
+}
+
+class Codel
+{
+  +GetNeighborBlock(DirectionPointer, CodelChooser): Codel
+  +GetNeighbor(DirectionPointer): Codel
+}
+
+class WhiteCodel
+{
+  +GetNeighborBlock(DirectionPointer, CodelChooser): Codel
+  +GetNeighbor(DirectionPointer): Codel
+}
+
+WhiteCodel --|> Codel
+
+class ColorBlock
+{
+  +GetSize(): int
+  +GetNeighbor(DirectionPointer, CodelChooser): Color
+}
+
+class Stack
+{
+  +Push(int): void
+  +Pop(): int
+  +Peek(): int
+  +IsEmpty(): bool
+}
+
+enum Direction
+{
+  Right, Down, Left, Up
+}
+
+class DirectionChooser
+{
+  +Rotate(): void
+}
+
+Color --> Hue
+Color --> Lightness
+
+Codel --> Color
+
+ColorBlock <--> Codel
+
+DirectionChooser --> Direction: directionPointer
+DirectionChooser --> Direction: codelChooser
+
+class Executor
+{
+  MoveNext(): void
+}
+
+Executor --> DirectionChooser
+Executor --> Codel: current
+Executor --> Stack
+
+@enduml
