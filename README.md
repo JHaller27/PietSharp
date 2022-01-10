@@ -14,14 +14,16 @@ Shall include a custom file type with a reduced size. Only need 5 bits: 1 for ea
 
 ### Compilation
 
-This arranges a graph of ColorBlocks for later execution.
+This arranges a graph of Codels for later execution.
 
-Of particular issue are WHITE codels. Ideally, these would be a no-op and could be ignored.
-Unfortunately, their behavior (in regards to the DirectionPointer/CodelChooser)
-breaks convention and depends on actual positioning rather than simple graph neighbors.
+Codels are arranged to "know" their Codel neighbors, and "know" their parent ColorBlock. Via its ColorBlock parent, a Codel can report the first Codel encountered in its ColorBlock neighbor.
 
-This issue is TBD for this proposed implemention.
+ColorBlocks "know" their ColorBlock neighbors. Via its Codel children, a ColorBlock can report the first Codel encountered in its ColorBlock neighbor.
+
+I.e., a Codel knows its Codel neighbors, but not how to find the next ColorBlock. A ColorBlock knows _how_ to find the neighboring ColorBlock, but relies on Codels to actually traverse the image (Codel graph) and find the first Codel.
+
+The special case WhiteCodel is similar to other Codels, but has slightly different behavior as far as determining its neighbor (see official spec linked above).
 
 ### Execution
 
-Once the ColorBlock graph is constructed in memory, execution should be as easy as comparing the "current" ColorBlock to the next.
+Once the Codel/ColorBlock graph is constructed in memory, execution should be as easy as comparing the "current" ColorBlock to the next.
